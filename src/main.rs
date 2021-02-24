@@ -1,7 +1,7 @@
 extern crate rand;
 use std::io;
-use rand::thread_rng;
-use rand::Rng;
+// use rand::thread_rng;
+// use rand::Rng;
 
 #[derive(Debug)]
 #[derive(PartialEq)]
@@ -11,11 +11,6 @@ enum Token {
     O
 }
 
-struct Board {
-    state: [Option<Token>; 9],
-    current_player: Option<Token>
-}
-
 /// gets a space's friendly string for printing
 fn get_space_str(space: &Option<Token>, space_number: usize) -> String {
     match space {
@@ -23,6 +18,11 @@ fn get_space_str(space: &Option<Token>, space_number: usize) -> String {
         Some(Token::O) => String::from("O"),
         Some(Token::X) => String::from("X"),
     }
+}
+
+struct Board {
+    state: [Option<Token>; 9],
+    current_player: Option<Token>
 }
 
 impl Board {
@@ -54,11 +54,11 @@ impl Board {
     }
 
     /// sets all spaces on board back to None
-    fn clear_board(&mut self) {
-        for space in self.state.iter_mut() {
-            *space = None;
-        }
-    }
+    // fn clear_board(&mut self) {
+    //     for space in self.state.iter_mut() {
+    //         *space = None;
+    //     }
+    // }
 
     /// checks board state to see if all spaces are full
     fn all_spaces_used(&self) -> bool {
@@ -188,11 +188,11 @@ mod tests {
     }
 }
 
-fn flip_coin() -> u8 {
-    let mut rng = thread_rng();
-    let coin: u8 = rng.gen_range(0..2);
-    coin
-}
+// fn flip_coin() -> u8 {
+//     let mut rng = thread_rng();
+//     let coin: u8 = rng.gen_range(0..2);
+//     coin
+// }
 
 fn main() {
     println!("Let's play Tic Tac Toe!\nChoose a number on the board to place an X or O");
@@ -227,9 +227,9 @@ fn main() {
 
         // swap the current player to the other token
         if b.current_player == Some(Token::O) {
-            b.current_player = Some(Token::X);
+            b.set_current_player(Some(Token::X));
         } else {
-            b.current_player = Some(Token::O);
+            b.set_current_player(Some(Token::O));
         }
     }
 }
